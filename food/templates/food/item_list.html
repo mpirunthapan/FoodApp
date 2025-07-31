@@ -1,0 +1,28 @@
+{% extends 'food/base.html' %}
+{% block title %}Food Item List{% endblock %}
+{% block content %}
+
+<div class="container mt-5">
+    <h2 class="mb-4">Food Item List</h2>
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+
+        {% for item in items %}
+        <div class="col">
+            <div class="card h-100 shadow-sm">
+                <img src="{{ item.item_image }}" class="card-img-top" alt="{{ item.item_name }}" style="height: 350px; object-fit: cover;">
+                <div class="card-body">
+                    <h5 class="card-title">{{ item.item_name }}</h5>
+                    <p class="card-text">{{item.item_desc}}</p>
+                    <p class="card-text fw-bold">${{ item.item_price }}</p>
+                </div>
+                <div class="card-footer d-flex justify-content-between">
+                    <a href="{% url 'edit_item' item.pk %}" class="btn btn-sm btn-warning">Edit</a>
+                    <a href="{% url 'delete_item' item.pk %}" class="btn btn-sm btn-danger">Delete</a>
+                </div>
+            </div>
+        </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}
