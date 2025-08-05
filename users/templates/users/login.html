@@ -1,9 +1,9 @@
 {% extends "food/base.html" %}
-{% block title %}User Registration{% endblock %}
+{% block title %}User Login{% endblock %}
 {% block content %}
 <form method="post">
     {% csrf_token %}
     {{ form.as_p }}
-    <button type="submit" class="btn btn-primary">Register</button>
+    <button type="submit" class="btn btn-primary">Login</button>
 </form>
 {% endblock %}
