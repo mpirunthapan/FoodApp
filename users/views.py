@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from .forms import RegisterForm
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.views import LoginView
 
 def register(request):
     if request.method == 'POST':
@@ -18,8 +19,15 @@ def register(request):
 
 @login_required
 def profile(request):
-    if request.user.is_authenticated:
-        return render(request, 'users/profile.html')
-    else:
-        messages.warning(request, 'You need to be logged in to view your profile.')
-        return redirect('login')
+    return render(request, 'users/profile.html')
+    
+class CustomLoginView(LoginView):
+    template_name = 'users/login.html'
+    
+    def form_valid(self, form):
+        messages.success(self.request, 'You have successfully logged in.')
+        return super().form_valid(form)
+    
+    def form_invalid(self, form):
+        messages.error(self.request, 'Invalid username or password.')
+        return super().form_invalid(form)
